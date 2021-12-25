@@ -64,7 +64,7 @@ function Form() {
         value={name}
         onChange={InputValues}
         autoComplete="off"
-      ></input>
+      />
       <label htmlFor={idNumber} className={s.labelNumber}>
         Number
       </label>
@@ -76,7 +76,7 @@ function Form() {
         value={number}
         onChange={InputValues}
         autoComplete="off"
-      ></input>
+      />
       <button className={s.btnForm} type="submite">
         Add contact
       </button>
