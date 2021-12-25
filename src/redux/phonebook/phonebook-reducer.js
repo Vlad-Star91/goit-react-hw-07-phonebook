@@ -1,0 +1,48 @@
+import { combineReducers } from "redux";
+import { createReducer } from "@reduxjs/toolkit";
+import * as phonebookActions from "./phonebook-actions";
+import {
+  fetchContact,
+  addContact,
+  deletedContact,
+} from "./phonebook-operations";
+
+const { getFilter } = phonebookActions;
+
+const items = createReducer([], {
+  [fetchContact.fulfilled]: (_, { payload }) => payload,
+  [addContact.fulfilled]: (state, { payload }) => {
+    if (
+      state.some(
+        ({ name }) => name.toLowerCase() === payload.name.toLowerCase()
+      )
+    ) {
+      alert(`${payload.name} is already in contacts!`);
+      return state;
+    }
+    return [...state, payload];
+  },
+  [deletedContact.fulfilled]: (state, { payload }) =>
+    state.filter((contact) => contact.id !== payload),
+});
+
+const loading = createReducer(false, {
+  [fetchContact.pending]: () => true,
+  [fetchContact.fulfilled]: () => false,
+  [fetchContact.rejected]: () => false,
+  [addContact.pending]: () => true,
+  [addContact.fulfilled]: () => false,
+  [addContact.rejected]: () => false,
+  [deletedContact.pending]: () => true,
+  [deletedContact.fulfilled]: () => false,
+  [deletedContact.rejected]: () => false,
+});
+const filter = createReducer("", {
+  [getFilter]: (_, { payload }) => payload,
+});
+
+export default combineReducers({
+  items,
+  filter,
+  loading,
+});
