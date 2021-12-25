@@ -38,7 +38,13 @@ function Form() {
       alert("Enter a number greater than 7 character and no more than 10");
       return;
     }
-
+    if (
+      contacts.some(
+        (contact) => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      return alert(`${name} is already in contacts`);
+    }
     dispatch(phonebookOperations.addContact({ name, number }));
     resetInputValues();
   };

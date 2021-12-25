@@ -11,17 +11,7 @@ const { getFilter } = phonebookActions;
 
 const items = createReducer([], {
   [fetchContact.fulfilled]: (_, { payload }) => payload,
-  [addContact.fulfilled]: (state, { payload }) => {
-    if (
-      state.some(
-        ({ name }) => name.toLowerCase() === payload.name.toLowerCase()
-      )
-    ) {
-      alert(`${payload.name} is already in contacts!`);
-      return state;
-    }
-    return [...state, payload];
-  },
+  [addContact.fulfilled]: (state, { payload }) => [...state, payload],
   [deletedContact.fulfilled]: (state, { payload }) =>
     state.filter((contact) => contact.id !== payload),
 });
