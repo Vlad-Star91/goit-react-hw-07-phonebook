@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getFilter } from "../../redux/phonebook/phonebook-selectors";
 import s from "./ContactList.module.css";
 import * as phonebookOperations from "../../redux/phonebook/phonebook-operations";
@@ -8,6 +8,9 @@ import * as phonebookOperations from "../../redux/phonebook/phonebook-operations
 function ContactList() {
   const contactList = useSelector(getFilter);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(phonebookOperations.fetchContact());
+  }, [dispatch]);
   return (
     <ul className={"js-list"}>
       {contactList.map(({ id, name, number }) => {
@@ -38,8 +41,4 @@ ContactList.propTypes = {
   ),
   onDelete: PropTypes.func,
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  fetchContact: dispatch(phonebookOperations.fetchContact()),
-});
-export default connect(null, mapDispatchToProps)(ContactList);
+export default ContactList;

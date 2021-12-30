@@ -23,7 +23,7 @@ function SearchContact() {
         onChange={(e) => dispatch(phonebookActions.getFilter(e.target.value))}
         id={id}
         className={s.inputSearch}
-      ></input>
+      />
     </div>
   );
 }
